@@ -12,11 +12,11 @@
   },
   "hyperdrive": [
     {
-      "binding": "DB_SIN",
+      "binding": "HD_SIN",
       "id": "fa05ff03ca964be2bc6e197df3f8449b"
     },
     {
-      "binding": "DB_IAD",
+      "binding": "HD_IAD",
       "id": "37e3b12f43e84c36b6eaebae7080cd53"
     }
   ]

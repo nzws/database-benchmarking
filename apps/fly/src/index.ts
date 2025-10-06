@@ -2,28 +2,35 @@ import { bench } from "bench";
 
 async function main() {
   const {
-    DATABASE_URL,
     AXIOM_TOKEN,
     AXIOM_DATASET,
     CLOUDFLARE_WORKERS_ENDPOINT,
     FLY_REGION = "unknown",
   } = process.env;
-  if (
-    !DATABASE_URL ||
-    !AXIOM_TOKEN ||
-    !AXIOM_DATASET ||
-    !CLOUDFLARE_WORKERS_ENDPOINT
-  ) {
+  if (!AXIOM_TOKEN || !AXIOM_DATASET || !CLOUDFLARE_WORKERS_ENDPOINT) {
     throw new Error("Missing required environment variables");
   }
 
+  console.log(`Current region: ${FLY_REGION}`);
+  console.log(
+    `Triggering Cloudflare Workers endpoint: ${CLOUDFLARE_WORKERS_ENDPOINT}`,
+  );
   await fetch(CLOUDFLARE_WORKERS_ENDPOINT, { method: "POST" });
 
+  const database = {
+    sin: process.env.DB_SIN,
+    iad: process.env.DB_IAD,
+  }[FLY_REGION];
+  if (!database) {
+    throw new Error(`No database configured for region: ${FLY_REGION}`);
+  }
+
+  console.log(`Benchmarking database in region: ${FLY_REGION}`);
   await bench({
-    connectionString: DATABASE_URL,
+    connectionString: database,
     AXIOM_TOKEN,
     AXIOM_DATASET,
-    environment: `fly-${FLY_REGION}`,
+    environment: `Fly.io (region: ${FLY_REGION}, DB: ${FLY_REGION})`,
   });
 }
 

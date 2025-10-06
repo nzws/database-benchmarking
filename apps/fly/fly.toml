@@ -1,19 +1,24 @@
-app = "database-benchmarking"
-primary_region = "sin"
+# fly.toml app configuration file generated for database-benchmarking on 2025-10-06T16:03:43+09:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-[build]
-dockerfile = "./Dockerfile"
-
-[deploy]
-strategy = "immediate"
-
-[[restart]]
-policy = "never"
-
-[[vm]]
-cpus = 1
-cpu_kind = "shared"
-memory = 1024
+app = 'database-benchmarking'
+primary_region = 'sin'
 
 [experimental]
-machine_config = '{ "schedule": "daily" }'
+  machine_config = '{ "schedule": "hourly" }'
+
+[build]
+  dockerfile = './Dockerfile'
+
+[deploy]
+  strategy = 'immediate'
+
+[[restart]]
+  policy = 'never'
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

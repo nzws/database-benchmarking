@@ -109,20 +109,38 @@ export default {
     console.log(`Request received at region: ${region}, isAsia: ${isAsia}`);
 
     const regionKey = isAsia ? "sin" : "iad";
-    const database = {
-      sin: env.DB_SIN.connectionString,
-      iad: env.DB_IAD.connectionString,
+    const hdUrl = {
+      sin: env.HD_SIN.connectionString,
+      iad: env.HD_IAD.connectionString,
     }[regionKey];
-    if (!database) {
+    if (!hdUrl) {
       console.error(`No database configured for region key: ${regionKey}`);
       return new Response("Database configuration error", { status: 500 });
     }
 
+    console.log(`Benchmarking with Hyperdrive in region: ${regionKey}`);
     await bench({
-      connectionString: database,
+      connectionString: hdUrl,
       AXIOM_TOKEN: env.AXIOM_TOKEN,
       AXIOM_DATASET: env.AXIOM_DATASET,
-      environment: `cloudflare-workers-${region}-db-${regionKey}`,
+      environment: `Cloudflare Workers with Hyperdrive (worker colo: ${region} - db: ${regionKey})`,
+    });
+
+    const directUrl = {
+      sin: env.DB_SIN,
+      iad: env.DB_IAD,
+    }[regionKey];
+    if (!directUrl) {
+      console.error(`No database configured for region key: ${regionKey}`);
+      return new Response("Database configuration error", { status: 500 });
+    }
+
+    console.log(`Benchmarking with direct connection in region: ${regionKey}`);
+    await bench({
+      connectionString: directUrl,
+      AXIOM_TOKEN: env.AXIOM_TOKEN,
+      AXIOM_DATASET: env.AXIOM_DATASET,
+      environment: `Cloudflare Workers with direct connection (worker colo: ${region} - db: ${regionKey})`,
     });
 
     return new Response("OK");
