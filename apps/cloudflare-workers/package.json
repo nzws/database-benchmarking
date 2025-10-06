@@ -1,0 +1,22 @@
+{
+  "name": "cloudflare-workers",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "start": "wrangler dev",
+    "cf-typegen": "wrangler types -c ./wrangler.jsonc",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "0.9.8",
+    "@cloudflare/workers-types": "4.20250927.0",
+    "@tsconfig/strictest": "2.0.6",
+    "typescript": "5.9.2",
+    "wrangler": "4.40.3"
+  },
+  "dependencies": {
+    "bench": "workspace:*"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "database-benchmarking",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-09-13",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "placement": {
+    "mode": "smart"
+  },
+  "hyperdrive": [
+    {
+      "binding": "DB_SIN",
+      "id": "fa05ff03ca964be2bc6e197df3f8449b"
+    },
+    {
+      "binding": "DB_IAD",
+      "id": "37e3b12f43e84c36b6eaebae7080cd53"
+    }
+  ]
+}

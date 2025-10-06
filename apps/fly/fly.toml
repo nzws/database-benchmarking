@@ -1,0 +1,19 @@
+app = "database-benchmarking"
+primary_region = "sin"
+
+[build]
+dockerfile = "./Dockerfile"
+
+[deploy]
+strategy = "immediate"
+
+[[restart]]
+policy = "never"
+
+[[vm]]
+cpus = 1
+cpu_kind = "shared"
+memory = 1024
+
+[experimental]
+machine_config = '{ "schedule": "daily" }'

@@ -1,0 +1,17 @@
+{
+  "name": "database-benchmarking",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "fix": "biome check --fix",
+    "lint": "biome check"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4"
+  },
+  "packageManager": "yarn@4.10.3"
+}
